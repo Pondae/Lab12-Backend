@@ -13,23 +13,25 @@ import java.util.List;
 
 @Configuration
 public class MobileConfig implements WebMvcConfigurer {
-    @Autowired
-    DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor;
-
-
-    @Autowired
-    DeviceHandlerMethodArgumentResolver deviceHandlerMethodArgumentResolver;
+    @Bean
+    public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor(){
+        return new DeviceResolverHandlerInterceptor();
+    }
+    @Bean
+    public DeviceHandlerMethodArgumentResolver deviceHandlerMethodArgumentResolver(){
+        return new DeviceHandlerMethodArgumentResolver();
+    }
 
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(deviceResolverHandlerInterceptor);
+        registry.addInterceptor(deviceResolverHandlerInterceptor());
     }
 
     @Override
     public void addArgumentResolvers(
             List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(deviceHandlerMethodArgumentResolver);
+        argumentResolvers.add(deviceHandlerMethodArgumentResolver());
     }
 
 }
